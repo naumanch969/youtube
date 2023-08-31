@@ -36,7 +36,7 @@ const Video = () => {
         <div className="videoWrapper">
 
           {/* video */}
-          {/* <video src={video.video} className='h-[720px] w-full ' /> */}
+          {/* <video src={video.video} controls className='h-[720px] w-full ' /> */}
           <img src={image8} className='h-[720px] max-h-[75vh] w-full rounded-[2px] ' />
 
           {/* video detail */}

@@ -15,7 +15,7 @@ API.interceptors.request.use((req) => {
 
 export const register = (userData) => API.post(`/user/register`, userData)
 export const login = (userData) => API.put(`/user/login`, userData)
-export const googleLogin = () => API.put(`/user/google`)
+export const googleLogin = (userData) => API.put(`/user/google`, userData)
 
 export const getUsers = () => API.get(`/user/all`)
 export const getCertainUsers = (userIds) => API.get(`/user/certain`, userIds)
@@ -35,7 +35,7 @@ export const getRandomVideos = () => API.get(`/video/get/random`)
 export const subscribedVideos = () => API.get(`/video/get/subscribed`)
 export const getVideosByTag = (tags) => API.get(`/video/search/tags?tags=${tags.map(tag => tag + ',')}`)
 export const searchByTitle = (query) => API.get(`/video/search/title?q=${query}`)
-export const createVideo = () => API.put(`/video/create`)
+export const createVideo = (videoData) => API.put(`/video/create`,videoData)
 export const updateVideo = (videoId) => API.put(`/video/update/${videoId}`)
 export const addView = (videoId) => API.put(`/video/update/view/${videoId}`)
 export const deleteVideo = (videoId) => API.delete(`/video/delete/${videoId}`)

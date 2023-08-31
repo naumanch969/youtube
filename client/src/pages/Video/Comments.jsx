@@ -5,19 +5,26 @@ import { getCertainUsers } from '../../redux/actions/user'
 
 const Comments = ({ comments }) => {
 
+    ///////////////////////////////////// VARIABLES ///////////////////////////////////
     const dispatch = useDispatch()
     const userIds = comments.map(comment => comment.userId)
     const { users } = useSelector(state => state.user)
 
+    ///////////////////////////////////// STATES ///////////////////////////////////////
     useEffect(() => {
         dispatch(getCertainUsers(userIds))
     }, [])
 
+
+    ///////////////////////////////////// FUNCTION /////////////////////////////////////
     const findedUser = (userId) => {
         const findedUsers = users.find(u => u._id == userId)
         return findedUsers[0]
     }
-
+    
+    
+    
+    ///////////////////////////////////// COMPONENT /////////////////////////////////////
     const Comment = ({ comment }) => (
         <div className="flex gap-[10px] ">
             <img src={findedUser(comment.userId).image} alt="" className='w-[50px] h-[50px] rounded-full ' />

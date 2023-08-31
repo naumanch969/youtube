@@ -1,4 +1,4 @@
-import { Home, Login, Register, Video } from './pages'
+import { Home, Login, Register, Video, Upload } from './pages'
 import { Navbar, Sidebar } from './components'
 import { Route, Routes } from 'react-router-dom'
 
@@ -16,6 +16,7 @@ const App = () => {
             <Route path='/' exact element={<Home type='random' />} />
             <Route path='/subscribed' exact element={<Home type='subscribed' />} />
             <Route path='/explore' exact element={<Home type='explore' />} />
+            <Route path='/upload' exact element={<Upload />} />
             <Route path='/search/:title' exact element={<Home type='search' />} />
             <Route path='/video/:videoId' element={<Video />} />
             <Route path='/auth/login' element={<Login />} />

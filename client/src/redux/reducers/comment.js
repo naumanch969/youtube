@@ -11,27 +11,19 @@ const commentSlice = createSlice({
         start: (state) => { state.isFetching = true; state.error = null },
         end: (state) => { state.isFetching = false; },
         error: (state, action) => { state.isFetching = false; state.error = action.payload },
-        getComments: (state, action) => {
-            state.comments = action.payload
-        },
-        createComment: (state, action) => {
-            state.comments = [...state.comments, action.payload]
-        },
-        updateComment: (state, action) => {
-            state.comments = state.comments.map(c => c = c._id == action.payload ? action.payload : c)
-        },
-        deleteComment: (state, action) => {
-            state.comments = state.comments.filter(c => c._id != action.payload._id)
-        },
+        getCommentsReducer: (state, action) => { state.comments = action.payload },
+        createCommentReducer: (state, action) => { state.comments = [...state.comments, action.payload] },
+        updateCommentReducer: (state, action) => { state.comments = state.comments.map(c => c = c._id == action.payload ? action.payload : c) },
+        deleteCommentReducer: (state, action) => { state.comments = state.comments.filter(c => c._id != action.payload._id) },
     }
 })
 export const {
     start,
     end,
     error,
-    getComments,
-    createComment,
-    updateComment,
-    deleteComment,
+    getCommentsReducer,
+    createCommentReducer,
+    updateCommentReducer,
+    deleteCommentReducer,
 } = commentSlice.actions
 export default commentSlice.reducer

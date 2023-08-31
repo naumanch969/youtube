@@ -4,6 +4,7 @@ const videoSchema = Schema({
     userId: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
+    tags: { type: Array, required: false },
     thumbnail: { type: String, required: true },
     video: { type: String, required: true },
     views: { type: Number, default: 0 },

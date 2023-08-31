@@ -54,22 +54,25 @@ export const login = async (req, res, next) => {
 
 
 
-
 export const googleLogin = async (req, res, next) => {
     try {
 
-        const { email, password: input_password } = req.body
+        const { email, image, username } = req.body
 
         const user = await User.findOne({ email })
-        if (!user) return next(error(400, 'wrong email'))
+        if (user) {
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-        const isPasswordCorrect = bcrypt.compare(input_password, user.password)
-        if (!isPasswordCorrect) return next(error(400, 'Invalid password'))
+            const { password, ...result } = user._doc
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ result, success: true, message: 'Logged In successfully' })
+        }
+        else {
+            const newUser = await User.create({ username, email, image, fromGoogle: true })
+            const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
-
-        const { password, ...result } = user._doc
-        res.cookie('access_token', token, { httpOnly: true }).status(200).json({ result: { ...result }, success: true, message: 'Logged In successfully' })
+            const { password, ...result } = newUser._doc
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ result, success: true, message: 'Logged In successfully' })
+        }
 
     } catch (err) {
         next(error(500, `${err.message} - login`))
@@ -92,7 +95,7 @@ export const getCertainUsers = async (req, res, next) => {
     try {
         const { userIds } = req.body
 
-        const users = await Promise.all(userIds.map(userId=>{
+        const users = await Promise.all(userIds.map(userId => {
             return User.findById(userId)
         }))
         res.status(200).json({ result: users, success: true, message: 'Users fetched successfully' })

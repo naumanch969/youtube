@@ -87,10 +87,10 @@ export const searchByTitle = (query) => async (dispatch) => {
     }
     dispatch(end())
 }
-export const createVideo = () => async (dispatch) => {
+export const createVideo = (videoData) => async (dispatch) => {
     dispatch(start())
     try {
-        const { data } = await api.createVideo()
+        const { data } = await api.createVideo(videoData)
         dispatch(createVideoReducer(data.result))
     } catch (err) {
         dispatch(error(err.message))

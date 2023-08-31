@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/actions/user'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../firebase'
+import { googleLogin } from '../../redux/actions/user'
 
 const Login = () => {
 
@@ -17,6 +20,16 @@ const Login = () => {
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value })
     }
+    const handleLoginWithGoogle = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider)
+            const { displayName: username, email, photoURL: image } = result.user
+            dispatch(googleLogin({ username, email, image }))
+        } catch (err) {
+            console.log('error in googleSignin = \n', err)
+        }
+    }
+
 
     return (
         <div style={{ minHeight: 'calc(100vh - 56px)' }} className=' flex flex-col items-center justify-center text-dark-text  ' >
@@ -31,6 +44,11 @@ const Login = () => {
                 <input type="password" value={userData.password} name='password' onChange={handleChange} placeholder='password' className='border-[1px] border-dark-soft w-full outline-none rounded-[3px] p-[10px] bg-transparent ' />
                 <button onClick={handleLogin} className='rounded-[3px] border-none py-[10px] px-[20px] font-medium cursor-pointer bg-dark-soft text-dark-soft-text ' >
                     {isFetching ? 'Loading...' : 'Sign in'}
+                </button>
+
+                <h3 className='text-[22px] ' >or</h3>
+                <button onClick={handleLoginWithGoogle} className='rounded-[3px] border-none py-[10px] px-[20px] font-medium cursor-pointer bg-dark-soft text-dark-soft-text ' >
+                    {isFetching ? 'Loading...' : 'Continue with Google'}
                 </button>
 
                 <span className='text-dark-soft-text text-[12px] flex justify-center gap-[8px] ' ><span>Don't have account?</span> <Link to='/auth/register' className='text-white ' >Register here</Link></span>

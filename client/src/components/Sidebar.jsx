@@ -24,7 +24,7 @@ const Sidebar = () => {
     ]
 
     return (
-        <div className='flex-[2] sticky top-0 bg-dark-light-main h-screen text-dark-text ' >
+        <div className='flex-[2] shadow-box sticky top-0 bg-dark-light-main h-screen text-dark-text ' >
             <div className="">
 
                 <Link to='/' className="flex justify-start items-center gap-[5px] ml-[1rem] h-[56px] sticky top-0 ">
